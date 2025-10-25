@@ -1,0 +1,9 @@
+torch
+torchvision
+torchaudio
+gymnasium[atari,accept-rom-license]
+autorom[accept-rom-license]
+numpy
+opencv-python
+matplotlib
+tqdm

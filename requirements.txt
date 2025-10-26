@@ -7,3 +7,7 @@ numpy
 opencv-python
 matplotlib
 tqdm
+pandas
+tensorboard
+ale-py
+

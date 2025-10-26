@@ -1,13 +1,14 @@
-
 import argparse, os, csv, time
 import numpy as np
 import torch
 import gymnasium as gym
+import ale_py 
 from collections import deque
 from tqdm import tqdm
 
-from wrappers import make_env
-from agent_ddqn import DDQNAgent
+from src.wrappers import make_env
+from src.agent_ddqn import DDQNAgent
+
 
 def evaluate(env, agent, episodes=10):
     returns = []

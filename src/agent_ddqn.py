@@ -1,4 +1,3 @@
-
 import torch
 import torch.nn as nn
 import torch.nn.functional as F
@@ -11,7 +10,7 @@ class DQN(nn.Module):
         self.conv1 = nn.Conv2d(in_channels, 32, kernel_size=8, stride=4)
         self.conv2 = nn.Conv2d(32, 64, kernel_size=4, stride=2)
         self.conv3 = nn.Conv2d(64, 64, kernel_size=3, stride=1)
-        self.fc1 = nn.Linear(7*7*64, 512)
+        self.fc1 = nn.Linear(7 * 7 * 64, 512)
         self.fc2 = nn.Linear(512, n_actions)
 
     def forward(self, x):
@@ -46,12 +45,10 @@ class DDQNAgent:
                                               beta_start=per_beta_start, beta_frames=per_beta_frames)
         self.loss_fn = nn.SmoothL1Loss(reduction='none')
 
-        # epsilon linear schedule
         self.eps_start = epsilon_start
         self.eps_final = epsilon_final
         self.eps_decay = epsilon_decay_frames
         self.frame_idx = 0
-
         self.steps = 0
 
     def epsilon(self):
@@ -82,7 +79,6 @@ class DDQNAgent:
         dones_t = torch.as_tensor(dones, dtype=torch.float32, device=self.device)
         weights_t = torch.as_tensor(weights, dtype=torch.float32, device=self.device)
 
-        # current Q
         q_values = self.online(states_t)
         q_selected = q_values.gather(1, actions_t.view(-1,1)).squeeze(1)
 
@@ -102,7 +98,6 @@ class DDQNAgent:
         torch.nn.utils.clip_grad_norm_(self.online.parameters(), 1.0)
         self.optim.step()
 
-        # update PER priorities
         self.memory.update_priorities(indices, td_error.detach().cpu().numpy())
 
         self.steps += 1

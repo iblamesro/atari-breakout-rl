@@ -1,0 +1,6 @@
+Run: exp1_baseline
+Frames: 250000
+Batch size: 32
+Learning rate: 1e-4
+Buffer size: 100000
+Timestamp: 20251028_223030

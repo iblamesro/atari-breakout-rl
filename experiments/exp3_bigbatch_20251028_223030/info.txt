@@ -1,0 +1,6 @@
+Run: exp3_bigbatch
+Frames: 250000
+Batch size: 64
+Learning rate: 2.5e-4
+Buffer size: 100000
+Timestamp: 20251028_223030

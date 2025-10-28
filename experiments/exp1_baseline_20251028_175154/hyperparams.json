@@ -1,0 +1,20 @@
+{
+  "env": "ALE/Breakout-v5",
+  "seed": 18713,
+  "total_frames": 250000,
+  "log_every": 10000,
+  "eval_every": 125000,
+  "save_dir": "experiments/exp1_baseline_20251028_175154",
+  "lr": 0.0001,
+  "gamma": 0.99,
+  "batch_size": 32,
+  "buffer_size": 100000,
+  "min_replay_size": 80000,
+  "target_update_tau": 0.005,
+  "epsilon_start": 1.0,
+  "epsilon_final": 0.02,
+  "epsilon_decay": 2000000,
+  "grad_clip": 10.0,
+  "deep_arch": false,
+  "timestamp": "2025-10-28_17-51-57"
+}

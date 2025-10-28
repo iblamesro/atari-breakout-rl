@@ -1,0 +1,20 @@
+{
+  "env": "ALE/Breakout-v5",
+  "seed": 42,
+  "total_frames": 2000000,
+  "log_every": 10000,
+  "eval_every": 200000,
+  "save_dir": "runs_fast",
+  "lr": 0.00025,
+  "gamma": 0.99,
+  "batch_size": 64,
+  "buffer_size": 500000,
+  "min_replay_size": 80000,
+  "target_update_tau": 0.005,
+  "epsilon_start": 1.0,
+  "epsilon_final": 0.02,
+  "epsilon_decay": 2000000,
+  "grad_clip": 10.0,
+  "deep_arch": false,
+  "timestamp": "2025-10-28_14-45-30"
+}

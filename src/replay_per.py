@@ -1,4 +1,3 @@
-
 import numpy as np
 
 class PrioritizedReplayBuffer:
@@ -30,32 +29,26 @@ class PrioritizedReplayBuffer:
 
     def sample(self, batch_size):
         n = len(self.buffer)
-        if n == 0:
-            raise ValueError("Buffer is empty")
         prios = self.priorities[:n] ** self.alpha
         probs = prios / prios.sum()
-        indices = np.random.choice(n, batch_size, p=probs, replace=False)
+        indices = np.random.choice(n, batch_size, p=probs)
         beta = self.beta_by_frame(self.frame)
         self.frame += 1
+
         weights = (n * probs[indices]) ** (-beta)
         weights /= weights.max()
 
-        states, actions, rewards, next_states, dones = [], [], [], [], []
-        for idx in indices:
-            s, a, r, ns, d = self.buffer[idx]
-            states.append(s)
-            actions.append(a)
-            rewards.append(r)
-            next_states.append(ns)
-            dones.append(d)
+        states, actions, rewards, next_states, dones = zip(*[self.buffer[idx] for idx in indices])
 
-        return (np.array(states, dtype=np.uint8),
-                np.array(actions, dtype=np.int64),
-                np.array(rewards, dtype=np.float32),
-                np.array(next_states, dtype=np.uint8),
-                np.array(dones, dtype=np.float32),
-                indices,
-                weights.astype(np.float32))
+        return (
+            np.array(states, dtype=np.uint8),
+            np.array(actions, dtype=np.int64),
+            np.array(rewards, dtype=np.float32),
+            np.array(next_states, dtype=np.uint8),
+            np.array(dones, dtype=np.float32),
+            indices,
+            weights.astype(np.float32)
+        )
 
     def update_priorities(self, indices, td_errors):
         for idx, err in zip(indices, td_errors):

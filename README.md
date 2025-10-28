@@ -1,12 +1,111 @@
-# Atari Breakout - Double DQN Agent
+# Atari Breakout - Double DQN Agent (OPTIMISÉ HAUTE PERFORMANCE)
 
-## 1. Project Overview
+## 📋 Vue d'ensemble
 
-This project implements a **Double Deep Q-Network (DDQN)** agent capable of learning to play the Atari **Breakout** game using **Reinforcement Learning**.
-The objective is to train an autonomous agent to maximize its game score by interacting with the environment through trial and error.
+Ce projet implémente un agent **Double Deep Q-Network (DDQN)** avec **Dueling architecture** et **Prioritized Experience Replay (PER)** capable d'apprendre à jouer au jeu Atari **Breakout**.
 
-The project was developed as part of the **Reinforcement Learning course** at the Albert School (MSc Data for Finance).
-It follows the Gymnasium (OpenAI) Atari API and uses **PyTorch** for model training.
+**🔥 Améliorations OPTIMISÉES pour haute performance:**
+- ✅ Architecture Dueling DQN avec option DEEP (4 couches conv)
+- ✅ Learning rate adaptatif (ReduceLROnPlateau)
+- ✅ Gradient clipping pour stabilité
+- ✅ Soft target updates optimisés (tau=0.005)
+- ✅ Buffer agrandi (500k transitions)
+- ✅ Hyperparamètres optimisés (batch_size=64, lr=2.5e-4)
+- ✅ Epsilon decay prolongé (2M frames, final=0.02)
+- ✅ Sauvegarde avec métadonnées complètes
+- ✅ Scripts d'évaluation et visualisation améliorés
+- ✅ Tests unitaires complets
+- ✅ Notebook d'analyse détaillé
+
+**🎯 Performance attendue:**
+- Baseline (500k frames): 1-2 points
+- Optimisé (5M frames): 20-40 points
+- Excellence (10M frames): 40-60 points
+
+---
+
+## 🚀 Démarrage rapide
+
+### Installation
+```bash
+# Installer les dépendances
+pip install -r requirements.txt
+```
+
+### Entraînement optimisé (RECOMMANDÉ - 5M frames)
+```bash
+python -m src.train_improved \
+    --env ALE/Breakout-v5 \
+    --total-frames 5000000 \
+    --seed 42 \
+    --save-dir runs_optimized \
+    --batch-size 64 \
+    --lr 2.5e-4 \
+    --deep-arch
+```
+
+**Temps estimé:** ~4-6h sur MPS (Apple Silicon), ~12-15h sur CPU
+
+### Entraînement rapide (test - 500k frames)
+```bash
+python -m src.train_improved \
+    --total-frames 500000 \
+    --save-dir runs_quick \
+    --batch-size 32
+```
+
+**Temps estimé:** ~1h sur MPS, ~2-3h sur CPU
+
+### Évaluation
+```bash
+# Évaluation quantitative
+python -m src.eval --model-path runs_optimized/best.pt --n-episodes 30
+
+# Visualisation (démo fluide 30 FPS)
+python -m src.watch_agent --model-path runs_optimized/best.pt --episodes 5 --fps 30
+```
+
+### Analyse dans Jupyter
+```bash
+jupyter notebook notebooks/breakout_analysis.ipynb
+```
+
+📖 **Voir [QUICKSTART.md](QUICKSTART.md) pour le guide complet**
+
+---
+
+## 📁 Structure du projet
+
+```
+atari-breakout-rl/
+├── src/
+│   ├── agent_ddqn.py          # Double DQN + Dueling architecture
+│   ├── replay_per.py          # Prioritized Experience Replay
+│   ├── train_breakout_ddqn_per.py  # Script d'entraînement baseline
+│   ├── train_improved.py      # ✨ Script d'entraînement optimisé
+│   ├── eval.py                # ✨ Évaluation headless
+│   ├── watch_agent.py         # Visualisation avec GUI
+│   ├── wrappers.py            # Preprocessing de l'environnement
+│   └── convert_checkpoint.py  # ✨ Conversion de checkpoints
+│
+├── tests/
+│   └── test_suite.py          # ✨ Tests unitaires
+│
+├── notebooks/
+│   └── breakout_analysis.ipynb # ✨ Analyse complète
+│
+├── runs/                       # Checkpoints baseline
+├── runs_improved/              # ✨ Checkpoints optimisés
+├── reports/                    # Rapports et visualisations
+├── configs/                    # ✨ Configurations d'entraînement
+│
+├── requirements.txt
+├── README.md
+├── QUICKSTART.md              # ✨ Guide de lancement rapide
+└── plot_training.py
+```
+
+✨ = Nouveaux fichiers ajoutés
 
 ---
 
